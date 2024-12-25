@@ -1,0 +1,48 @@
+.navbar {
+  color: white;
+  background-color: white;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 16px rgba(57, 91, 211, 0.5);
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+}
+
+button {
+  color: white;
+  padding: 8px 16px;
+  min-width: 145px;
+  height: 40px;
+  background-color: #395bd3;
+  border-radius: 50px;
+  border: #395bd3;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+}
+button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #395bd3;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid white;
+}
