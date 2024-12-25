@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">Task Management</div>
-      <button>
+      <button className="navbarButton">
         <span>+</span> New Task
       </button>
     </nav>

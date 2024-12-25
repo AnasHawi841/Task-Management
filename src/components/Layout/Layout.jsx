@@ -9,8 +9,14 @@ const Layout = ({ children }) => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+        }}
+      >
         <Sidebar />
+        <div className="children">{children}</div>
       </div>
     </div>
   );

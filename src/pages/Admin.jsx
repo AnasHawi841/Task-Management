@@ -6,8 +6,32 @@ import FilterUnit from "../components/FilterUnit/FilterUnit";
 import TaskList from "../components/Task/TaskList";
 
 const Admin = () => {
-  const [tasks, setTasks] = useState([]);
-  const [categories, setCategories] = useState(["Work", "Personal", "Urgent"]);
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      name: "tasks",
+      description: "loreddsadasdsadsa",
+      category: ["category01", "category02"],
+    },
+    {
+      id: 2,
+      name: "tasksaaaaaaa",
+      description:
+        "loreddsadasdsadssadasdsadadssadsadasddasadsadsadsadsaadsadssadsdadsasdadasdsaa",
+      category: ["category01", "category02", "category03"],
+    },
+    {
+      id: 3,
+      name: "tasksaaaaaaa",
+      description: "loreddsadasdsadsa",
+      category: ["category01", "category02", "category03"],
+    },
+  ]);
+  const [categories, setCategories] = useState([
+    "category 01",
+    "category 02",
+    "category 03",
+  ]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [filter, setFilter] = useState("All");
   const [dialogState, setDialogState] = useState({
@@ -51,7 +75,7 @@ const Admin = () => {
 
   // Filter and Categorize Tasks
   const filteredTasks = tasks.filter((task) => {
-    if (filter === "Completed") return task.completed;
+    if (filter === "All") return task;
     if (filter === "Incomplete") return !task.completed;
     if (filter === "Category") return selectedCategory.includes(task.category);
     return true;
@@ -59,10 +83,8 @@ const Admin = () => {
 
   return (
     <div className="admin-container">
-      <h1>Admin Task Management</h1>
-
       {/* Filter Section */}
-      <div className="filter-section">
+      {/* <div className="filter-section">
         <FilterUnit
           title="Filter by Status"
           filterOptions={["All", "Completed", "Incomplete"]}
@@ -75,7 +97,7 @@ const Admin = () => {
             setFilter("Category");
           }}
         />
-      </div>
+      </div> */}
 
       {/* Task List */}
       <TaskList
@@ -96,14 +118,14 @@ const Admin = () => {
       />
 
       {/* Add Task Button */}
-      <button
+      {/* <button
         onClick={() =>
           setDialogState({ isOpen: true, type: "Add", task: null })
         }
         className="add-task-button"
       >
         Add Task
-      </button>
+      </button> */}
 
       {/* Dialog */}
       <Dialog

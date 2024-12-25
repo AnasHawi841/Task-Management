@@ -17,7 +17,7 @@
   color: black;
 }
 
-button {
+.navbarButton {
   color: white;
   padding: 8px 16px;
   min-width: 145px;
@@ -34,7 +34,7 @@ button {
   font-size: 18px;
   line-height: 22px;
 }
-button span {
+.navbarButton span {
   display: flex;
   justify-content: center;
   align-items: center;

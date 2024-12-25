@@ -7,9 +7,9 @@ const Sidebar = () => {
       <div className="sidebar_title">Filter</div>
       <div className="sidebar_section">
         <h4 className="sidebar_titleSection">Completion Status</h4>
-        {["All", "Completed", "InComplete"].map((status) => {
+        {["All", "Completed", "InComplete"].map((status, index) => {
           return (
-            <div className="completion_filter">
+            <div className="completion_filter" key={index}>
               <input type="radio" name="choice" value={status} />
               <span>{status}</span>
             </div>
@@ -19,9 +19,9 @@ const Sidebar = () => {
       <div className="sidebar_section">
         <h4 className="sidebar_titleSection">Categories</h4>
         {["All", "Category 01", "Category 02", "Category 03"].map(
-          (category) => {
+          (category, index) => {
             return (
-              <div className="completion_filter">
+              <div key={index} className="completion_filter">
                 <input type="radio" name="choice" value={category} />
                 <span>{category}</span>
               </div>
