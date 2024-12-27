@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Category from "../../utils/enums/Category";
 import "./SelectCategory.css";
 
@@ -9,10 +9,15 @@ const SelectCategory = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Ensure selectedCategories is always an array
+  const selectedCategoriesArray = Array.isArray(selectedCategories)
+    ? selectedCategories
+    : [];
+
   const toggleCategory = (category) => {
-    const updatedCategories = selectedCategories.includes(category)
-      ? selectedCategories.filter((c) => c !== category)
-      : [...selectedCategories, category];
+    const updatedCategories = selectedCategoriesArray.includes(category)
+      ? selectedCategoriesArray.filter((c) => c !== category)
+      : [...selectedCategoriesArray, category];
 
     onChange(updatedCategories);
   };
@@ -22,7 +27,9 @@ const SelectCategory = ({
   };
 
   const removeCategory = (category) => {
-    const updatedCategories = selectedCategories.filter((c) => c !== category);
+    const updatedCategories = selectedCategoriesArray.filter(
+      (c) => c !== category
+    );
     onChange(updatedCategories);
   };
 
@@ -32,7 +39,7 @@ const SelectCategory = ({
   };
 
   // Close dropdown when clicking outside the component
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
@@ -45,14 +52,14 @@ const SelectCategory = ({
         <input
           type="text"
           placeholder="Select Categories"
-          value={selectedCategories.join(",  ")}
+          value={selectedCategoriesArray.join(",  ")} // Ensure it's always an array
           onClick={handleInputClick}
           readOnly
         />
         {/* Render selected categories as chips */}
-        {selectedCategories.length > 0 && (
+        {selectedCategoriesArray.length > 0 && (
           <div className="input-buttons">
-            {selectedCategories.map((category) => (
+            {selectedCategoriesArray.map((category) => (
               <div key={category} className="category-chip">
                 <span>{category}</span>
                 <button
@@ -74,10 +81,10 @@ const SelectCategory = ({
             <button
               key={category}
               className={`category-button ${
-                selectedCategories.includes(category) ? "disabled" : ""
+                selectedCategoriesArray.includes(category) ? "disabled" : ""
               }`}
               onClick={() => toggleCategory(category)}
-              disabled={selectedCategories.includes(category)}
+              disabled={selectedCategoriesArray.includes(category)}
             >
               {category}
             </button>

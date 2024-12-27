@@ -1,25 +1,55 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./style.css";
-import MODES from "./DialogModes";
-const Dialog = ({ isOpen, mode, onClose }) => {
+import UpsertContent from "./UpsertContent";
+import DeleteContent from "./DeleteContent";
+
+const Dialog = ({
+  isOpen,
+  onClose,
+  onDelete,
+  mode,
+  onUpsertTask,
+  taskName,
+  setTaskName,
+  taskDescription,
+  setTaskDescription,
+  taskId,
+  setCategories,
+  categories,
+  isComplete,
+}) => {
   if (!isOpen) return null;
-  const currentMode = MODES[mode];
-  if (!currentMode) {
-    console.error(
-      `Invalid mode "${mode}" provided. Valid modes are: Add, Edit, Delete.`
-    );
-    return null;
-  }
   return ReactDOM.createPortal(
     <div className="dialog-overlay">
-      {/* Apply different layout based on 'upsert' or 'delete' mode */}
       <div
         className={`dialog-content${mode === "delete" ? "-delete" : "-upsert"}`}
       >
-        {/* Hide the h1 element by applying the 'delete' style */}
-        {mode === "upsert" && <h1>{currentMode.header}</h1>}
-        <div>{currentMode.content(onClose)}</div>
+        {mode === "upsert" && (
+          <>
+            <h1>{taskName ? "Edit Task" : "Create New Task"}</h1>
+            <UpsertContent
+              onClose={onClose}
+              taskName={taskName}
+              setTaskName={setTaskName}
+              taskDescription={taskDescription}
+              setTaskDescription={setTaskDescription}
+              categories={categories}
+              setCategories={setCategories}
+              onUpsertTask={onUpsertTask}
+              isComplete={isComplete}
+            />
+          </>
+        )}
+        {mode === "delete" && (
+          <>
+            <DeleteContent
+              onClose={onClose}
+              onDelete={() => onDelete(taskId)}
+              taskName={taskName}
+            />
+          </>
+        )}
       </div>
     </div>,
     document.getElementById("dialog-root")

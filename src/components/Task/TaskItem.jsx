@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Task.css";
 
 const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
   const [status, setStatus] = useState(
-    task.completed ? "Complete" : "Incomplete"
+    task.isComplete ? "Complete" : "Incomplete"
   );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
+  // Update status when task completion state changes
+  useEffect(() => {
+    setStatus(task.isComplete ? "Completed" : "Incomplete");
+  }, [task.isComplete]);
+
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-    setIsDropdownOpen(false); // Close dropdown after selection
-    onToggleComplete(task.id); // Toggle task completion in the parent component
+    setIsDropdownOpen(false);
+    onToggleComplete(task.id, newStatus === "Completed");
   };
-
   return (
     <div className="mainTask">
       <div className="task-info">
@@ -30,7 +34,7 @@ const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
           )}
         </div>
         <div className="categoryTask">
-          {task.category.map((category, index) => {
+          {task.categories.map((category, index) => {
             return (
               <div className="taskItems" key={index}>
                 {category}

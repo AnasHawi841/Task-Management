@@ -11,8 +11,8 @@ const TaskList = ({ tasks, onEdit, onDelete, onToggleComplete }) => {
           <div key={task.id}>
             <TaskItem
               task={task}
-              onEdit={onEdit}
-              onDelete={onDelete}
+              onEdit={() => onEdit(task)}
+              onDelete={() => onDelete(task)}
               onToggleComplete={onToggleComplete}
             />
           </div>

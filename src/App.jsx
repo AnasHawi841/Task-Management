@@ -5,11 +5,17 @@ import "./App.css";
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const handleTaskUpdate = (updatedTasks) => {
-    setTasks(updatedTasks);
+  const addTask = (task) => {
+    setTasks((prevTasks) => [...prevTasks, task]);
+  };
+
+  const handleTaskUpdate = (updatedTask) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    );
   };
   return (
-    <Layout>
+    <Layout onAddTask={addTask}>
       <Admin tasks={tasks} onTaskUpdate={handleTaskUpdate} />
     </Layout>
   );

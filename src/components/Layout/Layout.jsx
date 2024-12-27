@@ -3,11 +3,11 @@ import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import "./Layout.css";
 
-const Layout = ({ children }) => {
+const Layout = ({ onAddTask, children }) => {
   return (
     <div>
       <div>
-        <Navbar />
+        <Navbar onAddTask={onAddTask} />
       </div>
       <div
         style={{
