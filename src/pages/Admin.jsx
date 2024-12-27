@@ -4,7 +4,7 @@ import Dialog from "../components/Dialog/Dialog";
 import SelectCategory from "../components/CategorySelector/SelectCategory ";
 import FilterUnit from "../components/FilterUnit/FilterUnit";
 import TaskList from "../components/Task/TaskList";
-
+import MODES from "../components/Dialog/DialogModes";
 const Admin = () => {
   const [tasks, setTasks] = useState([
     {
@@ -34,44 +34,40 @@ const Admin = () => {
   ]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [filter, setFilter] = useState("All");
-  const [dialogState, setDialogState] = useState({
-    isOpen: false,
-    type: "",
-    task: null,
-  });
+
   const [isLoading, setIsLoading] = useState(false);
 
   // Add Task Handler
-  const handleAddTask = (newTask) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setTasks([...tasks, { ...newTask, id: Date.now(), completed: false }]);
-      setDialogState({ isOpen: false, type: "", task: null });
-      setIsLoading(false);
-    }, 400); // Simulate delay with debouncing
-  };
+  // const handleAddTask = (newTask) => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setTasks([...tasks, { ...newTask, id: Date.now(), completed: false }]);
+  //     setDialogState({ isOpen: false, type: "", task: null });
+  //     setIsLoading(false);
+  //   }, 400); // Simulate delay with debouncing
+  // };
 
   // Edit Task Handler
-  const handleEditTask = (updatedTask) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setTasks(
-        tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-      );
-      setDialogState({ isOpen: false, type: "", task: null });
-      setIsLoading(false);
-    }, 400);
-  };
+  // const handleEditTask = (updatedTask) => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setTasks(
+  //       tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+  //     );
+  //     setDialogState({ isOpen: false, type: "", task: null });
+  //     setIsLoading(false);
+  //   }, 400);
+  // };
 
   // Delete Task Handler
-  const handleDeleteTask = (taskId) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setTasks(tasks.filter((task) => task.id !== taskId));
-      setDialogState({ isOpen: false, type: "", task: null });
-      setIsLoading(false);
-    }, 400);
-  };
+  // const handleDeleteTask = (taskId) => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setTasks(tasks.filter((task) => task.id !== taskId));
+  //     setDialogState({ isOpen: false, type: "", task: null });
+  //     setIsLoading(false);
+  //   }, 400);
+  // };
 
   // Filter and Categorize Tasks
   const filteredTasks = tasks.filter((task) => {
@@ -80,6 +76,22 @@ const Admin = () => {
     if (filter === "Category") return selectedCategory.includes(task.category);
     return true;
   });
+
+  const [dialogData, setDialogData] = useState({
+    isOpen: false,
+    mode: "Add", // Default mode
+  });
+
+  const openDialog = (type) => {
+    setDialogData({
+      isOpen: true,
+      mode: type, // Pass mode correctly
+    });
+  };
+
+  const closeDialog = () => {
+    setDialogData({ ...dialogData, isOpen: false });
+  };
 
   return (
     <div className="admin-container">
@@ -102,10 +114,8 @@ const Admin = () => {
       {/* Task List */}
       <TaskList
         tasks={filteredTasks}
-        onEdit={(task) => setDialogState({ isOpen: true, type: "Edit", task })}
-        onDelete={(task) =>
-          setDialogState({ isOpen: true, type: "Delete", task })
-        }
+        onEdit={(task) => openDialog("upsert")}
+        onDelete={(task) => openDialog("delete")}
         onToggleComplete={(taskId) =>
           setTasks(
             tasks.map((task) =>
@@ -129,29 +139,10 @@ const Admin = () => {
 
       {/* Dialog */}
       <Dialog
-        isOpen={dialogState.isOpen}
-        onClose={() => setDialogState({ isOpen: false, type: "", task: null })}
-      >
-        {dialogState.type === "Add" && <Form onSubmit={handleAddTask} />}
-        {dialogState.type === "Edit" && (
-          <Form initialData={dialogState.task} onSubmit={handleEditTask} />
-        )}
-        {dialogState.type === "Delete" && (
-          <div>
-            <p>Are you sure you want to delete this task?</p>
-            <button onClick={() => handleDeleteTask(dialogState.task.id)}>
-              Yes
-            </button>
-            <button
-              onClick={() =>
-                setDialogState({ isOpen: false, type: "", task: null })
-              }
-            >
-              No
-            </button>
-          </div>
-        )}
-      </Dialog>
+        isOpen={dialogData.isOpen}
+        mode={dialogData.mode}
+        onClose={closeDialog}
+      />
 
       {/* Loading Indicator */}
       {isLoading && <div className="loading-indicator">Loading...</div>}

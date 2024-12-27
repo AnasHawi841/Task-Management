@@ -1,0 +1,68 @@
+.category-selector {
+  position: relative;
+  width: 100%;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px 30px 10px 10px; /* Space for the button */
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.input-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.category-chip {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.remove-category-button {
+  border-radius: 50px;
+  background: #f6f6ff;
+  border: none;
+  color: #395bd3;
+
+  cursor: pointer;
+}
+
+.category-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ccc;
+  background-color: white;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.category-button {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.category-button.disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
