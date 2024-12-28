@@ -26,52 +26,6 @@
   width: 600px;
   height: 420px;
 }
-#upsert {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-#upsert input,
-textarea {
-  width: 500px;
-  height: 20px;
-  border-radius: 6px;
-  border: 1px solid #ebecfb;
-  padding: 14px 16px;
-  outline: none;
-}
-#upsert input {
-  height: 20px;
-}
-#upsert textarea {
-  height: 100px;
-}
-#upsert input:focus,
-#upsert textarea:focus {
-  border-color: blue;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-#upsert .cancel_button,
-#upsert .upsert_button {
-  width: 250px;
-  height: 48px;
-  border-radius: 8px;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 18px;
-}
-#upsert .cancel_button {
-  color: #395bd3;
-  background-color: #f2f5ff;
-}
-#upsert .upsert_button {
-  color: #ffffff;
-  background-color: #395bd3;
-}
 
 .footer {
   display: flex;
