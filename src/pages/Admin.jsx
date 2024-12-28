@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 import Dialog from "../components/Dialog/Dialog";
 import TaskList from "../components/Task/TaskList";
 
-const Admin = ({ tasks, filters }) => {
+const Admin = ({ tasks, filters, onDeleteTask }) => {
   const [tasksList, setTasksList] = useState([]);
+  const [dialogData, setDialogData] = useState({
+    isOpen: false,
+    mode: "upsert",
+    taskName: "",
+    taskDescription: "",
+    categories: [],
+    isComplete: false,
+    taskId: "",
+  });
 
   // Use useEffect to set the initial state with the tasks prop
   useEffect(() => {
@@ -24,22 +33,9 @@ const Admin = ({ tasks, filters }) => {
         )
       );
     }
-
     setTasksList(filteredTasks);
   }, [tasks, filters]);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [dialogData, setDialogData] = useState({
-    isOpen: false,
-    mode: "upsert",
-    taskName: "",
-    taskDescription: "",
-    categories: [],
-    isComplete: false,
-    taskId: "",
-  });
-
+  // open the dialog
   const openDialog = (type, task) => {
     setDialogData({
       isOpen: true,
@@ -51,23 +47,11 @@ const Admin = ({ tasks, filters }) => {
       isComplete: task.isComplete,
     });
   };
-
+  //close the dialog
   const closeDialog = () => {
     setDialogData({ ...dialogData, isOpen: false });
   };
-
-  const handleDeleteTask = (taskId) => {
-    setTasksList(tasksList.filter((task) => task.id !== taskId)); // Remove the task by ID
-  };
-  const onToggleComplete = (taskId, isComplete) => {
-    const indexOfTask = tasks.findIndex((task) => task.id === taskId);
-    if (indexOfTask !== -1) tasks[indexOfTask].isComplete = isComplete;
-    setTasksList((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId ? { ...task, isComplete } : task
-      )
-    );
-  };
+  // create a task
   const handleUpsertTask = () => {
     const newTask = {
       name: dialogData.taskName,
@@ -86,7 +70,22 @@ const Admin = ({ tasks, filters }) => {
     );
     closeDialog();
   };
+  // delete a task
+  const handleDeleteTask = (taskId) => {
+    onDeleteTask(taskId);
+  };
 
+  // toggle the status
+  const onToggleComplete = (taskId, isComplete) => {
+    const indexOfTask = tasks.findIndex((task) => task.id === taskId);
+    if (indexOfTask !== -1) tasks[indexOfTask].isComplete = isComplete;
+    setTasksList((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, isComplete } : task
+      )
+    );
+  };
+  // change category
   const handleCategoryChange = (updatedCategories) => {
     const indexOfTask = tasks.findIndex(
       (task) => task.id === dialogData.taskId
@@ -125,8 +124,6 @@ const Admin = ({ tasks, filters }) => {
         setCategories={handleCategoryChange}
         isComplete={dialogData.isComplete}
       />
-      {/* Loading Indicator */}
-      {isLoading && <div className="loading-indicator">Loading...</div>}
     </div>
   );
 };

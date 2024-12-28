@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import SelectCategory from "../CategorySelector/SelectCategory ";
+import useDebounce from "../../hooks/useDebounce";
+import Loading from "../Loading/Loading";
 import Category from "../../utils/enums/Category";
 import "./Form.css";
 const Form = ({
@@ -13,9 +15,15 @@ const Form = ({
   categories,
   isComplete,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(categories);
   // Validate if task name is filled
   const taskNameRef = useRef(null);
+
+  // Debounce task name,Description and selectedCategories  with 400ms delay
+  const debouncedTaskName = useDebounce(taskName, 400);
+  const debouncedDescription = useDebounce(taskDescription, 400);
+  const debouncedCategories = useDebounce(selectedCategories, 400);
 
   const handleCategoryChange = (updatedCategories) => {
     setSelectedCategories(updatedCategories);
@@ -23,14 +31,18 @@ const Form = ({
   };
 
   const handleCreateTask = () => {
+    setIsLoading(true);
     const newTask = {
-      name: taskName,
-      description: taskDescription,
-      categories: selectedCategories,
+      name: debouncedTaskName,
+      description: debouncedDescription,
+      categories: debouncedCategories,
       isComplete: isComplete,
     };
-    onUpsertTask(newTask);
-    onClose();
+    setTimeout(() => {
+      onUpsertTask(newTask);
+      setIsLoading(false);
+      onClose();
+    }, 1500);
   };
 
   // Check if task name has a value using useRef
@@ -42,7 +54,6 @@ const Form = ({
       id="upsert"
       onSubmit={(e) => {
         e.preventDefault();
-        handleCreateTask();
       }}
     >
       <div>
@@ -80,12 +91,15 @@ const Form = ({
           className="upsert_button"
           onClick={handleCreateTask}
           disabled={
-            (!taskName && !isTaskNameFilled) || selectedCategories.length === 0
+            isLoading ||
+            (!taskName && !isTaskNameFilled) ||
+            selectedCategories.length === 0
           }
         >
           {taskName ? "Save Changes" : "Create"}
         </button>
       </div>
+      {isLoading && <Loading></Loading>}
     </form>
   );
 };
