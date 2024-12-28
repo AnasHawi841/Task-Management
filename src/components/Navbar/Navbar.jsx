@@ -12,7 +12,7 @@ const Navbar = ({ onAddTask }) => {
     categories: [],
     isComplete: false,
   });
-
+  // open the dialog
   const openDialog = (type) => {
     setDialogData({
       isOpen: true,
@@ -23,11 +23,11 @@ const Navbar = ({ onAddTask }) => {
       isComplete: false,
     });
   };
-
+  // close the dialog
   const closeDialog = () => {
     setDialogData({ ...dialogData, isOpen: false });
   };
-
+  // create a task
   const handleCreateTask = () => {
     const newTask = {
       name: dialogData.taskName,
@@ -39,7 +39,7 @@ const Navbar = ({ onAddTask }) => {
     onAddTask(newTask);
     closeDialog();
   };
-
+  // change the category
   const handleCategoryChange = (updatedCategories) => {
     setDialogData((prevState) => ({
       ...prevState,
@@ -65,7 +65,7 @@ const Navbar = ({ onAddTask }) => {
         setTaskDescription={(description) =>
           setDialogData({ ...dialogData, taskDescription: description })
         }
-        categories={dialogData.categories} // Pass categories to Dialog
+        categories={dialogData.categories}
         setCategories={handleCategoryChange}
       />
     </nav>

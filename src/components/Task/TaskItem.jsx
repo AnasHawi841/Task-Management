@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./Task.css";
 
 const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [status, setStatus] = useState(
     task.isComplete ? "Complete" : "Incomplete"
   );
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   // Update status when task completion state changes
   useEffect(() => {
     setStatus(task.isComplete ? "Completed" : "Incomplete");
   }, [task.isComplete]);
-
+  // change the status
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
     setIsDropdownOpen(false);

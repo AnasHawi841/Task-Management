@@ -19,17 +19,16 @@ const Form = ({
   const [selectedCategories, setSelectedCategories] = useState(categories);
   // Validate if task name is filled
   const taskNameRef = useRef(null);
-
   // Debounce task name,Description and selectedCategories  with 400ms delay
   const debouncedTaskName = useDebounce(taskName, 400);
   const debouncedDescription = useDebounce(taskDescription, 400);
   const debouncedCategories = useDebounce(selectedCategories, 400);
-
+  // change the category
   const handleCategoryChange = (updatedCategories) => {
     setSelectedCategories(updatedCategories);
     setCategories(updatedCategories);
   };
-
+  // create a task
   const handleCreateTask = () => {
     setIsLoading(true);
     const newTask = {

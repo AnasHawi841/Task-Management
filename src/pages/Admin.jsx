@@ -13,18 +13,15 @@ const Admin = ({ tasks, filters, onDeleteTask }) => {
     isComplete: false,
     taskId: "",
   });
-
   // Use useEffect to set the initial state with the tasks prop
   useEffect(() => {
     let filteredTasks = tasks;
-
     // Filter by status
     if (filters.status === "Completed") {
       filteredTasks = filteredTasks.filter((task) => task.isComplete);
-    } else if (filters.status === "InComplete") {
+    } else if (filters.status === "Incomplete") {
       filteredTasks = filteredTasks.filter((task) => !task.isComplete);
     }
-
     // Filter by categories
     if (!filters.categories.includes("All")) {
       filteredTasks = filteredTasks.filter((task) =>

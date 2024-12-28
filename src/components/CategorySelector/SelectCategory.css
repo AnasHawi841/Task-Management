@@ -6,6 +6,7 @@
 .input-container {
   position: relative;
   width: 100%;
+  z-index: 1000;
 }
 
 input[type="text"] {
@@ -20,6 +21,8 @@ input[type="text"] {
   flex-wrap: wrap;
   gap: 5px;
   margin-top: 10px;
+  position: absolute;
+  inset: 0;
 }
 
 .category-chip {
@@ -36,7 +39,6 @@ input[type="text"] {
   background: #f6f6ff;
   border: none;
   color: #395bd3;
-
   cursor: pointer;
 }
 

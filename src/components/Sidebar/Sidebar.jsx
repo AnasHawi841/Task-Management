@@ -5,7 +5,10 @@ import FilterUnit from "../FilterUnit/FilterUnit";
 const Sidebar = ({ onFilter }) => {
   return (
     <aside className="sidebar">
-      <FilterUnit onFilter={onFilter}></FilterUnit>
+      <FilterUnit
+        title={["status", "categories"]}
+        onFilter={onFilter}
+      ></FilterUnit>
     </aside>
   );
 };

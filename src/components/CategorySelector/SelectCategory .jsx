@@ -8,7 +8,6 @@ const SelectCategory = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   // Ensure selectedCategories is always an array
   const selectedCategoriesArray = Array.isArray(selectedCategories)
     ? selectedCategories
@@ -23,22 +22,21 @@ const SelectCategory = ({
   };
 
   const handleInputClick = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prevIsOpen) => !prevIsOpen);
   };
-
+  // remove categories
   const removeCategory = (category) => {
     const updatedCategories = selectedCategoriesArray.filter(
       (c) => c !== category
     );
     onChange(updatedCategories);
   };
-
+  // when click outside this component the list will close
   const handleOutsideClick = (e) => {
     if (e.target.closest(".category-selector")) return;
     setIsOpen(false);
   };
 
-  // Close dropdown when clicking outside the component
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
@@ -48,12 +46,12 @@ const SelectCategory = ({
 
   return (
     <div className="category-selector">
-      <div className="input-container">
+      <div className="input-container" onClick={handleInputClick}>
         <input
           type="text"
-          placeholder="Select Categories"
-          value={selectedCategoriesArray.join(",  ")} // Ensure it's always an array
-          onClick={handleInputClick}
+          placeholder={
+            selectedCategoriesArray.length ? "" : "Select Categories"
+          }
           readOnly
         />
         {/* Render selected categories as chips */}
@@ -64,7 +62,10 @@ const SelectCategory = ({
                 <span>{category}</span>
                 <button
                   className="remove-category-button"
-                  onClick={() => removeCategory(category)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeCategory(category);
+                  }}
                 >
                   &times;
                 </button>
@@ -83,7 +84,7 @@ const SelectCategory = ({
               className={`category-button ${
                 selectedCategoriesArray.includes(category) ? "disabled" : ""
               }`}
-              onClick={() => toggleCategory(category)} // Toggle the category on click
+              onClick={() => toggleCategory(category)}
             >
               {category}
             </button>
