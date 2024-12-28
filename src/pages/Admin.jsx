@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from "react";
-import Form from "../components/Form/Form";
 import Dialog from "../components/Dialog/Dialog";
-import SelectCategory from "../components/CategorySelector/SelectCategory ";
-import FilterUnit from "../components/FilterUnit/FilterUnit";
 import TaskList from "../components/Task/TaskList";
 
-const Admin = ({ tasks, onTaskUpdate }) => {
+const Admin = ({ tasks, filters }) => {
   const [tasksList, setTasksList] = useState([]);
 
   // Use useEffect to set the initial state with the tasks prop
   useEffect(() => {
-    setTasksList(tasks);
-  }, [tasks]);
+    console.log("filters", filters);
+    console.log("tasks", tasks);
+    let filteredTasks = tasks;
 
-  const [filter, setFilter] = useState("All");
+    // Filter by status
+    if (filters) {
+      if (filters.status === "Completed") {
+        filteredTasks = filteredTasks.filter((task) => task.isComplete);
+      } else if (filters.status === "InComplete") {
+        filteredTasks = filteredTasks.filter((task) => !task.isComplete);
+      }
+
+      // Filter by categories
+      if (!filters.categories.includes("All")) {
+        filteredTasks = filteredTasks.filter((task) =>
+          filters.categories.some((category) =>
+            task.categories.includes(category)
+          )
+        );
+      }
+    }
+
+    setTasksList(filteredTasks);
+  }, [tasks, filters]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [dialogData, setDialogData] = useState({
@@ -47,6 +65,8 @@ const Admin = ({ tasks, onTaskUpdate }) => {
     setTasksList(tasksList.filter((task) => task.id !== taskId)); // Remove the task by ID
   };
   const onToggleComplete = (taskId, isComplete) => {
+    console.log(taskId);
+    console.log(isComplete);
     setTasksList((prevTasks) =>
       prevTasks.map((task) =>
         task.id === taskId ? { ...task, isComplete } : task
@@ -78,6 +98,7 @@ const Admin = ({ tasks, onTaskUpdate }) => {
       categories: updatedCategories,
     }));
   };
+
   return (
     <div className="admin-container">
       {/* Task List */}
@@ -87,7 +108,6 @@ const Admin = ({ tasks, onTaskUpdate }) => {
         onEdit={(task) => openDialog("upsert", task)}
         onDelete={(task) => openDialog("delete", task)}
       />
-
       {/* Dialog */}
       <Dialog
         isOpen={dialogData.isOpen}
@@ -106,7 +126,6 @@ const Admin = ({ tasks, onTaskUpdate }) => {
         setCategories={handleCategoryChange}
         isComplete={dialogData.isComplete}
       />
-
       {/* Loading Indicator */}
       {isLoading && <div className="loading-indicator">Loading...</div>}
     </div>

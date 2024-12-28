@@ -1,0 +1,31 @@
+.completion_filter {
+  display: flex;
+  gap: 5px;
+  padding: 5px 5px;
+}
+
+.completion_filter span {
+  font-weight: 400;
+  line-height: 20px;
+}
+.sidebar_titleSection {
+  font-weight: 400;
+  line-height: 20px;
+  color: #242424;
+}
+.sidebar_title {
+  font-weight: 600;
+  line-height: 22px;
+  color: black;
+  padding: 10px 0px;
+}
+
+.completion_filter input {
+  cursor: pointer;
+}
+
+.sidebar_section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

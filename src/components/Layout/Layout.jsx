@@ -3,7 +3,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import "./Layout.css";
 
-const Layout = ({ onAddTask, children }) => {
+const Layout = ({ onFilter, onAddTask, children }) => {
   return (
     <div>
       <div>
@@ -15,7 +15,7 @@ const Layout = ({ onAddTask, children }) => {
           gap: "10px",
         }}
       >
-        <Sidebar />
+        <Sidebar onFilter={onFilter} />
         <div className="children">{children}</div>
       </div>
     </div>

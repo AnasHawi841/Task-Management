@@ -4,19 +4,26 @@ import Layout from "./components/Layout/Layout";
 import "./App.css";
 function App() {
   const [tasks, setTasks] = useState([]);
-
+  const [filters, setFilters] = useState({
+    status: "All",
+    categories: ["All"],
+  });
   const addTask = (task) => {
     setTasks((prevTasks) => [...prevTasks, task]);
   };
+  const addFilter = (filter) => {
+    console.log("filter in app ", filter);
+    console.log(tasks);
+    setFilters(filter);
 
-  const handleTaskUpdate = (updatedTask) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-    );
+    // setTasks((prevTasks) =>
+    //   prevTasks.map((task) => ())
+    // );
   };
+
   return (
-    <Layout onAddTask={addTask}>
-      <Admin tasks={tasks} onTaskUpdate={handleTaskUpdate} />
+    <Layout onAddTask={addTask} onFilter={addFilter}>
+      <Admin tasks={tasks} filters={filters} />
     </Layout>
   );
 }

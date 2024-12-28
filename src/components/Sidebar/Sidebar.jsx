@@ -1,34 +1,11 @@
 import React from "react";
 import "./Sidebar.css";
+import FilterUnit from "../FilterUnit/FilterUnit";
 
-const Sidebar = () => {
+const Sidebar = ({ onFilter }) => {
   return (
     <aside className="sidebar">
-      <div className="sidebar_title">Filter</div>
-      <div className="sidebar_section">
-        <h4 className="sidebar_titleSection">Completion Status</h4>
-        {["All", "Completed", "InComplete"].map((status, index) => {
-          return (
-            <div className="completion_filter" key={index}>
-              <input type="radio" name="choice" value={status} />
-              <span>{status}</span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="sidebar_section">
-        <h4 className="sidebar_titleSection">Categories</h4>
-        {["All", "Category 01", "Category 02", "Category 03"].map(
-          (category, index) => {
-            return (
-              <div key={index} className="completion_filter">
-                <input type="radio" name="choice" value={category} />
-                <span>{category}</span>
-              </div>
-            );
-          }
-        )}
-      </div>
+      <FilterUnit onFilter={onFilter}></FilterUnit>
     </aside>
   );
 };
