@@ -16,8 +16,8 @@ const SelectCategory = ({
 
   const toggleCategory = (category) => {
     const updatedCategories = selectedCategoriesArray.includes(category)
-      ? selectedCategoriesArray.filter((c) => c !== category)
-      : [...selectedCategoriesArray, category];
+      ? selectedCategoriesArray.filter((c) => c !== category) // Remove if already selected
+      : [...selectedCategoriesArray, category]; // Add if not selected
 
     onChange(updatedCategories);
   };
@@ -83,8 +83,7 @@ const SelectCategory = ({
               className={`category-button ${
                 selectedCategoriesArray.includes(category) ? "disabled" : ""
               }`}
-              onClick={() => toggleCategory(category)}
-              disabled={selectedCategoriesArray.includes(category)}
+              onClick={() => toggleCategory(category)} // Toggle the category on click
             >
               {category}
             </button>

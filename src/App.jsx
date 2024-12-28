@@ -12,13 +12,7 @@ function App() {
     setTasks((prevTasks) => [...prevTasks, task]);
   };
   const addFilter = (filter) => {
-    console.log("filter in app ", filter);
-    console.log(tasks);
     setFilters(filter);
-
-    // setTasks((prevTasks) =>
-    //   prevTasks.map((task) => ())
-    // );
   };
 
   return (

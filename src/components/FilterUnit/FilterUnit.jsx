@@ -59,7 +59,7 @@ const FilterUnit = ({ onFilter }) => {
           (category, index) => (
             <div key={index} className="completion_filter">
               <input
-                type="radio"
+                type="checkbox"
                 name={category}
                 value={category}
                 checked={selectedCategories.includes(category)}

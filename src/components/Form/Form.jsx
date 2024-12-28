@@ -14,7 +14,6 @@ const Form = ({
   isComplete,
 }) => {
   const [selectedCategories, setSelectedCategories] = useState(categories);
-
   // Validate if task name is filled
   const taskNameRef = useRef(null);
 
@@ -80,7 +79,9 @@ const Form = ({
         <button
           className="upsert_button"
           onClick={handleCreateTask}
-          disabled={!isTaskNameFilled || selectedCategories.length === 0}
+          disabled={
+            (!taskName && !isTaskNameFilled) || selectedCategories.length === 0
+          }
         >
           {taskName ? "Save Changes" : "Create"}
         </button>

@@ -7,8 +7,6 @@ const Admin = ({ tasks, filters }) => {
 
   // Use useEffect to set the initial state with the tasks prop
   useEffect(() => {
-    console.log("filters", filters);
-    console.log("tasks", tasks);
     let filteredTasks = tasks;
 
     // Filter by status
@@ -43,7 +41,6 @@ const Admin = ({ tasks, filters }) => {
   });
 
   const openDialog = (type, task) => {
-    console.log(task);
     setDialogData({
       isOpen: true,
       mode: type,
@@ -63,8 +60,8 @@ const Admin = ({ tasks, filters }) => {
     setTasksList(tasksList.filter((task) => task.id !== taskId)); // Remove the task by ID
   };
   const onToggleComplete = (taskId, isComplete) => {
-    console.log(taskId);
-    console.log(isComplete);
+    const indexOfTask = tasks.findIndex((task) => task.id === taskId);
+    if (indexOfTask !== -1) tasks[indexOfTask].isComplete = isComplete;
     setTasksList((prevTasks) =>
       prevTasks.map((task) =>
         task.id === taskId ? { ...task, isComplete } : task
@@ -91,6 +88,10 @@ const Admin = ({ tasks, filters }) => {
   };
 
   const handleCategoryChange = (updatedCategories) => {
+    const indexOfTask = tasks.findIndex(
+      (task) => task.id === dialogData.taskId
+    );
+    if (indexOfTask !== -1) tasks[indexOfTask].categories = updatedCategories;
     setDialogData((prevState) => ({
       ...prevState,
       categories: updatedCategories,

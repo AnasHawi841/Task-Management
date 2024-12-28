@@ -33,8 +33,11 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
+  position: relative;
+  transition: all 0.3s ease;
 }
-.navbarButton span {
+
+.navbarButton .span_symbol {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,4 +49,21 @@
   height: 16px;
   border-radius: 50%;
   border: 1px solid white;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navbarButton:hover {
+  min-width: 145px;
+  justify-content: center;
+  padding: 8px;
+  background: linear-gradient(90deg, #5a7dfb 0%, #4f70e8 22.15%, #2743a5 100%);
+}
+
+.navbarButton:hover .span_symbol {
+  transform: scale(1.4);
+  opacity: 1;
+}
+
+.navbarButton:hover .span_text {
+  display: none;
 }

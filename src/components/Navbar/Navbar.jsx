@@ -36,10 +36,10 @@ const Navbar = ({ onAddTask }) => {
       isComplete: dialogData.isComplete,
       id: uuidv4(),
     };
-    console.log(newTask);
     onAddTask(newTask);
     closeDialog();
   };
+
   const handleCategoryChange = (updatedCategories) => {
     setDialogData((prevState) => ({
       ...prevState,
@@ -51,7 +51,8 @@ const Navbar = ({ onAddTask }) => {
     <nav className="navbar">
       <div className="navbar-brand">Task Management</div>
       <button className="navbarButton" onClick={() => openDialog("upsert")}>
-        <span>+</span> New Task
+        <span className="span_symbol ">+</span>
+        <span className="span_text">New Task</span>
       </button>
       <Dialog
         isOpen={dialogData.isOpen}
